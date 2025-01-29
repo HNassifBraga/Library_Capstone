@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        {% block title %}
+        <title>Online Store</title>
+        {% endblock %}
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+    </head>
+    <body>
+        <header>
+            {% if user.is_authenticated %}
+            <nav class="navbar navbar-expand-sm navbar-dark bg-primary">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="collapsibleNavId">
+                    <ul class="navbar-nav me-auto mt-2 mt-lg-0">
+                        
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'product_list' %}">Product List</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'basket' %}">Your Basket</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'basket_history' %}">Basket History</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                            </li>
+                            {% if user.is_staff %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'all_baskets' %}">all Basket</a>
+                                </li>
+                            {% endif %}
+            {% else %}
+                {% comment %} <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li> {% endcomment %}
+            {% endif %}
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <div class="container mt-3">
+            {% block content %}
+            {% endblock %}
+        </div>
+        
+        <!-- Bootstrap JS and dependencies -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    </body>
+</html>
