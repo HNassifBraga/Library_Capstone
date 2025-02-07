@@ -1,0 +1,35 @@
+{% extends 'master.html' %}
+
+{% block content%}
+    <h1> Books Written By {{ author.name }} </h1>
+
+    <div class="table-responsive ">
+        <table class="table table-bordered table-striped table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>title</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in books %}
+                        <tr>
+                            <td>{{ book.title }}</td>
+                            {% if user.is_staff %}
+                                <td class="w-50 text-center">
+                                    <a class="ms-5 btn btn-danger" href="{% url 'delete_book' book.pk %}">Delete Book</a>
+                                    <a class="ms-5 btn btn-warning" href="{% url 'editBook' book.pk %}">Edit Book</a>
+                            {% else %}
+                                <td class="w-25 text-center">
+                                    {% if book.isRented == False%}
+                                    <a class=" btn btn-success me-3" href="{% url 'rent_book' book.pk %}">Rent Book</a>
+                                    {% endif %}
+                            {% endif %}
+                            <a class="btn btn-primary me-3" href="{% url 'book_detail' book.pk %}">book details</a> </td>
+                        </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock%}

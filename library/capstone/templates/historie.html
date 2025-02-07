@@ -1,0 +1,80 @@
+{% extends 'master.html' %}
+
+{% block content %}
+{% if user.is_staff %}
+    <form method="GET" action="{% url 'historie' %}" class="mb-4">
+        <div class="input-group">
+            <input type="text" name="q" class="form-control" placeholder="Search by username..." value="{{ query|default:'' }}">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </form>
+{% endif %}
+<div class="container mt-5">
+    {% if user.is_staff %}
+        <h1 class="text-center mb-4">All Rented Books</h1>
+    {% else %}
+        <h1 class="text-center mb-4">Your Rental History</h1>
+    {% endif %}
+
+    {% if user.is_staff %}
+        {% if rented_book %}
+            <div class="row">
+                {% for rented in rented_book %}
+                    <div class="col-md-6">
+                        <div class="card mb-4 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ rented.book.title }}</h5>
+                                <p class="card-text"><strong>Rented by:</strong> {{ rented.user.username }}</p>
+                                <p class="card-text"><strong>Rented on:</strong> {{ rented.rented_date }}</p>
+                                <p class="card-text {% if rented.return_date < now %}text-danger{% else %}text-warning{% endif %}">
+                                    <strong>Return by:</strong> {{ rented.return_date }}
+                                </p>
+                                {% if rented.returned_date %}
+                                    {% if rented.returned_date < rented.return_date %}
+                                        <p class="text-success"><strong>Returned on:</strong> {{ rented.returned_date }}</p>
+                                    {% else %}
+                                        <p class="text-danger"><strong>Returned on:</strong> {{ rented.returned_date }}</p>
+                                    {% endif %}
+                                {% else %}
+                                    <p class="text-danger"><strong>Not returned yet</strong></p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-muted text-center">No books have been rented.</p>
+        {% endif %}
+    {% else %}
+        {% if user_rented %}
+            <div class="row">
+                {% for us_rented in user_rented %}
+                    <div class="col-md-6">
+                        <div class="card mb-4 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ us_rented.book.title }}</h5>
+                                <p class="card-text"><strong>Rented on:</strong> {{ us_rented.rented_date }}</p>
+                                <p class="card-text {% if us_rented.return_date < now %}text-danger{% else %}text-warning{% endif %}">
+                                    <strong>Return by:</strong> {{ us_rented.return_date }}
+                                </p>
+                                {% if us_rented.returned_date %}
+                                    {% if us_rented.returned_date < us_rented.return_date %}
+                                        <p class="text-success"><strong>Returned on:</strong> {{ us_rented.returned_date }}</p>
+                                    {% else %}
+                                        <p class="text-danger"><strong>Returned on:</strong> {{ us_rented.returned_date }}</p>
+                                    {% endif %}
+                                {% else %}
+                                    <p class="text-danger"><strong>Not returned yet</strong></p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-muted text-center">You haven't rented any books yet.</p>
+        {% endif %}
+    {% endif %}
+</div>
+{% endblock %}

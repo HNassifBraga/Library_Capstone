@@ -1,0 +1,49 @@
+{% extends "master.html" %}
+
+{% block content %}
+<!-- Hero Section: Título da página -->
+<div class="container mt-5">
+    <h1 class="display-4 text-center mb-4">Author List</h1>
+
+
+    <!-- Tabela de produtos -->
+    {% if user.is_staff %}
+    <h4><a class="btn btn-primary"  href="{% url 'addAuthor'%}">Add Author</a></h4>
+    {% endif %}
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>name</th>
+                    <th>date_of_birth</th>
+                    <th>country_of_birth</th>
+                    <th>Date of Death</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for author in authors %}
+                    <tr>
+                        <td>{{ author.name }}</td>
+                        <td>{{ author.date_of_birth  }}</td>  <!-- Display price with currency format -->
+                        <td>{{ author.country_of_birth }}</td>
+                        {% if author.date_of_death %}  <!-- Corrigindo a verificação -->
+                            <td>{{ author.date_of_death }}</td> 
+                        {% else %}
+                            <td>Still Alive</td>
+                        {% endif %}
+                        <td class="text-center">
+                        {% if user.is_staff %}
+                            <a class="btn btn-danger me-5" href="{% url 'delete_author' author.pk %}">Delete Author</a>
+                            <a class="btn btn-warning " href="{% url 'editAuthor' author.pk %}">Edit Author</a>
+                        {% endif %}
+                            <a class="btn btn-primary ms-5" href="{% url 'authorBook' author.pk %}">See books</a>
+                        </td>
+                        
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

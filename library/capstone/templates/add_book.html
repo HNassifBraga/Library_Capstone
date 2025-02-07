@@ -1,0 +1,59 @@
+{% extends 'master.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg p-4">
+                <h2 class="text-center mb-4">Adicionar Livro</h2>
+                <form method="POST">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" class="form-control" id="title" name="title" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="author" class="form-label">Author</label>
+                        <select class="form-select" id="author" name="author" required>
+                            <option value="" selected disabled>Choose an author</option>
+                            {% for author in authors%}
+                                <option value='{{author.name}}'>{{ author.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="pub_date" class="form-label">Date of Publishment</label>
+                        <input type="date" class="form-control" id="pub_date" name="pub_date" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="genre" class="form-label">Genre</label>
+                        <select class="form-select" id="genre" name="genre" required>
+                            <option value="" selected disabled>Choose a genre</option>
+                            <option value="Fiction">Fiction</option>
+                            <option value="Fantasy">Fantasy</option>
+                            <option value="Mystery">Mystery</option>
+                            <option value="Romance">Romance</option>
+                            <option value="Horror">Horror</option>
+                            <option value="Historical Fiction">Historical Fiction</option>  
+                        </select>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">Adicionar Livro</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

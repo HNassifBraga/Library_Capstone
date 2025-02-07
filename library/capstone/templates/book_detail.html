@@ -1,0 +1,31 @@
+{% extends 'master.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-body">
+            <h1 class="card-title text-center text-primary">{{ book.title }} - Details</h1>
+            <hr>
+
+            <p class="fw-bold"><i class="fas fa-user"></i> Written by: <span class="text-muted">{{ book.author }}</span></p>
+            <p class="fw-bold"><i class="fas fa-calendar-alt"></i> Published in: <span class="text-muted">{{ book.publication_date }}</span></p>
+            <p class="fw-bold"><i class="fas fa-align-left"></i> Description:</p>
+            <p class="text-muted">{{ book.description }}</p>
+            <p class="fw-bold"><i class="fas fa-book"></i> Genre: <span class="badge bg-info text-dark">{{ book.genre }}</span></p>
+
+            {% if user.is_staff == False %}
+                {% if book.isRented == False %}
+                    <div class="text-center mt-4">
+                        <a href="{% url 'rent_book' book.pk  %}" class="btn btn-success btn-lg">
+                            <i class="fas fa-book-reader"></i> Rent Book
+                        </a>
+                    </div>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Adicionando Font Awesome para ícones -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+{% endblock %}

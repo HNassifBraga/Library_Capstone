@@ -19,29 +19,24 @@
                 </button>
                 <div class="collapse navbar-collapse" id="collapsibleNavId">
                     <ul class="navbar-nav me-auto mt-2 mt-lg-0">
-                        
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'product_list' %}">Product List</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'basket' %}">Your Basket</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'basket_history' %}">Basket History</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-                            </li>
-                            {% if user.is_staff %}
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{% url 'all_baskets' %}">all Basket</a>
-                                </li>
-                            {% endif %}
-            {% else %}
-                {% comment %} <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login' %}">Login</a>
-                </li> {% endcomment %}
+                    <li>
+                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                    </li>
+                    <a class="nav-link" href="{% url 'authorList' %}">Author List</a>
+                    </li>
+                    </li>
+                        <a class="nav-link" href="{% url 'home' %}">Book List</a>
+                    </li>
+                    </li>
+                        <a class="nav-link" href="{% url 'historie' %}">History</a>
+                    </li>
+                    {% if user.is_staff == False%}
+                    </li>
+                        <a class="nav-link" href="{% url 'my_rented' %}">My rented Book</a>
+                    </li>
+                    {% endif %}
             {% endif %}
+                
                     </ul>
                 </div>
             </nav>

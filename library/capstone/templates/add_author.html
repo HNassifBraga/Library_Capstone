@@ -1,0 +1,42 @@
+{% extends 'master.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg p-4">
+                <h2 class="text-center mb-4">Adicionar Autor</h2>
+                <form method="POST">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Nome do Autor</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="birth_date" class="form-label">Data de Nascimento</label>
+                        <input type="date" class="form-control" id="birth_date" name="birth_date" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="death_date" class="form-label">Data de Falecimento</label>
+                        <input type="date" class="form-control" id="death_date" name="death_date">
+                        <small class="form-text text-muted">Deixe em branco se o autor ainda estiver vivo.</small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="birth_country" class="form-label">País de Nascimento</label>
+                        <input type="text" class="form-control" id="birth_country" name="birth_country" required>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">Adicionar Autor</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

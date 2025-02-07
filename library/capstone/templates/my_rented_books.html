@@ -1,0 +1,26 @@
+{% extends 'master.html' %}
+
+{% block content %} 
+    <h1>Rented Books</h1>
+
+    {% for rented_book in rented_books %}
+        {% if rented_book.returned_date == Null %}
+            <div class="card p-3 mb-3 shadow-sm">
+                <h3>{{ rented_book.book.title }}</h3>
+                <p><strong>Rented at:</strong> {{ rented_book.rented_date }}</p>
+                
+                {% if rented_book.return_date > now %}
+                    <p ><strong>Return by:</strong> {{ rented_book.return_date }}</p>
+                {% else %}
+                    <p class="text-danger"><strong>Return by:</strong> {{ rented_book.return_date }}</p> 
+                    <p class="text-danger">It has already been passed the return date, return the book as soon as possible !!!!</p>  
+                {% endif %}
+
+                <!-- Exibir botão de devolução se necessário -->
+                <a href="{% url 'return_book' rented_book.pk %}" class="btn btn-danger">Return Book</a>
+            </div>
+        {% endif %}
+    {% empty %}
+        <p>No books rented.</p>
+    {% endfor %}
+{% endblock %}
